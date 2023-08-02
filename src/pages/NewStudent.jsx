@@ -5,13 +5,22 @@ function NewStudent() {
   const [email, setEmail] = useState("");
   const [priorXp, setPriorXp] = useState("");
 
-  const handleNewStudent = async () => {
+  const handleNewStudent = async (e) => {
+    e.preventDefault();
     const priorXpArray = priorXp.split(" ");
     const newStudent = {
       name,
       email,
       priorXp: priorXpArray,
     };
+    const response = await fetch("http://localhost:5005/api/students/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newStudent),
+    });
+    const parsed = await response.json();
   };
 
   return (
