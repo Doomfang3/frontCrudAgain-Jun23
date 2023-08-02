@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const StudentForm = ({ onSubmit, student }) => {
   const [name, setName] = useState(student?.name || '')
-  const [email, setEmail] = useState((typeof student.email !== 'undefined' && student.email) || '')
+  const [email, setEmail] = useState((typeof student !== 'undefined' && student.email) || '')
   const [priorXp, setPriorXp] = useState(student?.priorXp.join(' ') || '')
 
   const handleSubmit = event => {
