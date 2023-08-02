@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const StudentDetailsPage = () => {
   const { studentId } = useParams()
+  const navigate = useNavigate()
 
   const [student, setStudent] = useState()
 
@@ -22,6 +23,19 @@ const StudentDetailsPage = () => {
     fetchStudent()
   }, [])
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:5005/api/students/${studentId}`, {
+        method: 'DELETE',
+      })
+      if (response.status === 202) {
+        navigate('/students')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return student ? (
     <>
       <h1>Student Details</h1>
@@ -32,6 +46,9 @@ const StudentDetailsPage = () => {
           <li>{currentXp}</li>
         ))}
       </ul>
+      <button type='button' onClick={handleDelete}>
+        Delete
+      </button>
     </>
   ) : (
     <h1>Loading...</h1>
